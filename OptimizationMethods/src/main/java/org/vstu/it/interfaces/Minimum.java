@@ -1,5 +1,6 @@
 package org.vstu.it.interfaces;
 
 public interface Minimum {
-    public void minimum();
+    double minimum(double firstLLimit, double secondLimit, double accuracy, String func);
+
 }

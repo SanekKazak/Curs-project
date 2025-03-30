@@ -1,0 +1,4 @@
+rootProject.name = 'Curs-project'
+include 'OptimizationMethods'
+include 'FuncLib'
+

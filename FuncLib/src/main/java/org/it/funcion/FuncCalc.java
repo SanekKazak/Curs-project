@@ -2,17 +2,16 @@ package org.it.funcion;
 
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
-import org.it.exception.NullFuncException;
 
 public class FuncCalc {
     private Function function;
 
-    public FuncCalc(String function) throws NullFuncException {
-        this.function = new Function(function);
+    public FuncCalc(){
+        this.function = new Function();
     }
 
-    public void setFunction(Function function){
-        this.function = function;
+    public void setFunction(String func) throws Exception {
+        this.function.setFunction(func);
     }
 
     public double insert(Double value){

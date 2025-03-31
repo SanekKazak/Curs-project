@@ -1,7 +1,5 @@
 package org.it.funcion;
 
-import org.it.exception.NullFuncException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -11,10 +9,10 @@ class Function {
     String func;
     String value;
 
-    public Function(String func) throws NullFuncException {
-        List<String> matchers = new ArrayList<>();
+    public void setFunction(String func) throws Exception {
         if(!func.isEmpty() && func.matches(".*[a-zA-Z0-9].*")){
             this.func = func.toLowerCase();
+            List<String> matchers = new ArrayList<>();
             String matcher = func.toLowerCase()
                     .replace("sin", "")
                     .replace("cos", "")
@@ -24,24 +22,24 @@ class Function {
                     .replace("pi", "");
             Matcher notRegularValues = Pattern.compile("[a-z]")
                     .matcher(matcher);
-            if(notRegularValues.find()){
+            if (notRegularValues.find()) {
                 value = notRegularValues.group();
             }
-            while(notRegularValues.find()){
+            while (notRegularValues.find()) {
                 matchers.add(notRegularValues.group());
             }
-            if(!matchers.isEmpty()){
-                if(matchers.stream()
+            if (!matchers.isEmpty()) {
+                if (matchers.stream()
                         .anyMatch(x -> !x.equals(value))
-                ){
-                    throw new NullFuncException("extra variable");
+                ) {
+                    throw new Exception("extra variable");
                 }
             }
-            if(func.matches(".*[^a-zA-Z0-9/*+\\-^()].*")){
-                throw new NullFuncException("extra symbols");
+            if (func.matches(".*[^a-zA-Z0-9/*+\\-^()].*")) {
+                throw new Exception("extra symbols");
             }
-        } else {
-            throw new NullFuncException("function is empty");
+        }else {
+            throw new Exception("function is empty");
         }
     }
 }

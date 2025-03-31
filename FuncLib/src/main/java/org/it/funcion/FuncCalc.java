@@ -6,12 +6,8 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 public class FuncCalc {
     private Function function;
 
-    public FuncCalc(){
-        this.function = new Function();
-    }
-
-    public void setFunction(String func) throws Exception {
-        this.function.setFunction(func);
+    public FuncCalc(Function function){
+        this.function = function;
     }
 
     public double insert(Double value){

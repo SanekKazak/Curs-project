@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Function {
+public class Function {
     String func;
     String value;
 
-    public void setFunction(String func) throws Exception {
+    public Function(String func) throws Exception {
         if(!func.isEmpty() && func.matches(".*[a-zA-Z0-9].*")){
             this.func = func.toLowerCase();
             List<String> matchers = new ArrayList<>();

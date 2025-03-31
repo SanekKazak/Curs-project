@@ -4,7 +4,7 @@ import org.it.funcion.FuncCalc;
 import org.it.funcion.Function;
 import org.vstu.it.interfaces.Minimum;
 
-public class Dihomethry implements Minimum {
+public class Fibonachi implements Minimum {
     @Override
     public double minimum(double firstLLimit,
                           double secondLimit,

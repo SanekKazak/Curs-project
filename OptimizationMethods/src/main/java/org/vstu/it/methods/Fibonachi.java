@@ -1,30 +1,41 @@
 package org.vstu.it.methods;
 
-import org.it.funcion.FuncCalc;
 import org.it.funcion.Function;
-import org.vstu.it.interfaces.Minimum;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Fibonachi implements Minimum {
-    @Override
+public class Fibonachi{
     public double minimum(double firstLLimit,
                           double secondLimit,
-                          double accuracy,
-                          String func) throws Exception {
-        Function function = new Function(func);
-        FuncCalc calc = new FuncCalc(function);
-        double min, max, middle = (firstLLimit + secondLimit) / 2;
-        while (Math.abs(secondLimit - firstLLimit) > accuracy) {
-            middle = (firstLLimit + secondLimit) / 2;
-            min = middle - accuracy * 0.1;
-            max = middle + accuracy * 0.1;
-            double p = calc.insert(min);
-            double p1 = calc.insert(max);
-            if (p > p1) {
-                firstLLimit = middle;
-            } else if (p < p1) {
-                secondLimit = middle;
+                          int accuracy,
+                          Function func) throws Exception {
+        List<Double> list = fibonachiSequence(accuracy);
+        double x1, x2, f1, f2;
+        while (accuracy > 2) {
+            accuracy--;
+            x1 = firstLLimit+list.get(accuracy-2)/list.get(accuracy)*(secondLimit-firstLLimit);
+            x2 = firstLLimit+list.get(accuracy-1)/list.get(accuracy)*(secondLimit-firstLLimit);
+            f1 = func.insert(x1);
+            f2 = func.insert(x2);
+            if(f1>f2){
+                firstLLimit = x1;
+            }
+            if(f1<f2){
+                secondLimit = x2;
             }
         }
-        return middle;
+        return firstLLimit;
     }
+
+    public List<Double> fibonachiSequence(int value){
+        List<Double> list = new ArrayList<>();
+        list.add(0.0);
+        list.add(1.0);
+        for(int i =2; i<value; i++){
+            Double el = list.get(i-1)+list.get(i-2);
+            list.add(el);
+        }
+        return list;
+    }
+
 }

@@ -1,6 +1,5 @@
 package org.vstu.it.methods;
 
-import org.it.funcion.Function;
 import org.it.funcion.ValidationService;
 
 public class Main {

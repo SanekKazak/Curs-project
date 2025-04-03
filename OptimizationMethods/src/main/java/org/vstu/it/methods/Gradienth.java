@@ -9,13 +9,14 @@ public class Gradienth{
                           double accuracy,
                           Function func) throws Exception {
         double previous;
-        boolean end = false;
-        while(!end){
+        int end = 1000;
+        while(end>0){
             previous = currentPoint;
             currentPoint = currentPoint - iterationSize * ValidationService.validate(func.dif(1)).insert(currentPoint);
             if(Math.abs(previous-currentPoint)<accuracy){
                 return currentPoint;
             }
+            end--;
         }
         return null;
     }

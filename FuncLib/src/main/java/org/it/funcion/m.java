@@ -2,10 +2,10 @@ package org.it.funcion;
 
 public class m {
     public static void main(String[] args) {
-        Function fe = null;
+        Function fe;
         try {
             fe = ValidationService.validate("sin(x)");
-            System.out.println(fe.toString());
+            System.out.println(fe);
             System.out.println(fe.dif(1));
             System.out.println(fe.dif(2));
             System.out.println(fe.dif(3));

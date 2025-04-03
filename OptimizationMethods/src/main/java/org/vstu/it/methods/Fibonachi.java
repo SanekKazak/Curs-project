@@ -8,7 +8,7 @@ public class Fibonachi {
     public double minimum(double firstLLimit,
                           double secondLimit,
                           Integer accuracy,
-                          Function func) throws Exception {
+                          Function func) {
         List<Double> list = fibonachiSequence(accuracy);
         double x1, x2, f1, f2;
         while (accuracy > 2) {

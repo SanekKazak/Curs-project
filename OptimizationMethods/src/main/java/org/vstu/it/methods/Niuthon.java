@@ -8,8 +8,8 @@ public class Niuthon{
                           double accuracy,
                           Function func) throws Exception {
         double previous;
-        boolean end = false;
-        while(!end){
+        int end = 1000;
+        while(end>0){
             previous = currentPoint;
             currentPoint = currentPoint -
                     ValidationService.validate(func.dif(1)).insert(currentPoint) /
@@ -17,6 +17,7 @@ public class Niuthon{
             if(Math.abs(previous-currentPoint)<accuracy){
                 return currentPoint;
             }
+            end--;
         }
         return null;
     }

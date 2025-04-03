@@ -1,7 +1,6 @@
 package org.it.funcion;
 
 import org.matheclipse.core.eval.ExprEvaluator;
-import org.matheclipse.core.expression.F;
 
 public class Function {
     String func;
@@ -48,7 +47,7 @@ public class Function {
     */
     private Function difCalc(){
         ExprEvaluator evaluator = new ExprEvaluator(false, (short) 20);
-        Function result = null;
+        Function result;
         try {
             result = ValidationService
                     .validate(evaluator.evaluate("D("+

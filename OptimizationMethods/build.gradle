@@ -14,7 +14,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation project(':FuncLib')
     implementation 'net.objecthunter:exp4j:0.4.8'
-
 }
 
 test {

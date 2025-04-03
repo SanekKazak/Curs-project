@@ -4,10 +4,10 @@ import org.it.funcion.Function;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fibonachi{
+public class Fibonachi {
     public double minimum(double firstLLimit,
                           double secondLimit,
-                          int accuracy,
+                          Integer accuracy,
                           Function func) throws Exception {
         List<Double> list = fibonachiSequence(accuracy);
         double x1, x2, f1, f2;

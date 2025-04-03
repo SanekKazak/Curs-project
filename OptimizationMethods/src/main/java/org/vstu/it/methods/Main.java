@@ -9,11 +9,9 @@ public class Main {
         Dihomethry d = new Dihomethry();
         Goldenpath g = new Goldenpath();
         try {
-            Function fe =  ValidationService.validate("exp(x^2)");
-            System.out.println(fe.differential("exp(x^2)"));
             System.out.println(f.minimum(-90, 19, 20, ValidationService.validate("x^6-x")));
-            System.out.println(d.minimum(-90, 19, 0.000001, ValidationService.validate("x^6-x")));
-            System.out.println(g.minimum(-90, 19, 0.000001, ValidationService.validate("x^6-x")));
+            System.out.println(d.minimum(-90, 19, 0.1, ValidationService.validate("x^6-x")));
+            System.out.println(g.minimum(-90, 19, 0.1, ValidationService.validate("x^6-x")));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

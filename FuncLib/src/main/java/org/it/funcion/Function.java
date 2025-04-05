@@ -1,47 +1,69 @@
 package org.it.funcion;
 
-import org.it.exception.NullFuncException;
+import org.matheclipse.core.eval.ExprEvaluator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-class Function {
+public class Function {
     String func;
-    String value;
+    String variable;
 
-    public Function(String func) throws NullFuncException {
-        List<String> matchers = new ArrayList<>();
-        if(!func.isEmpty() && func.matches(".*[a-zA-Z0-9].*")){
-            this.func = func.toLowerCase();
-            String matcher = func.toLowerCase()
-                    .replace("sin", "")
-                    .replace("cos", "")
-                    .replace("tan", "")
-                    .replace("ctan", "")
-                    .replace("exp", "")
-                    .replace("pi", "");
-            Matcher notRegularValues = Pattern.compile("[a-z]")
-                    .matcher(matcher);
-            if(notRegularValues.find()){
-                value = notRegularValues.group();
-            }
-            while(notRegularValues.find()){
-                matchers.add(notRegularValues.group());
-            }
-            if(!matchers.isEmpty()){
-                if(matchers.stream()
-                        .anyMatch(x -> !x.equals(value))
-                ){
-                    throw new NullFuncException("extra variable");
-                }
-            }
-            if(func.matches(".*[^a-zA-Z0-9/*+\\-^()].*")){
-                throw new NullFuncException("extra symbols");
-            }
-        } else {
-            throw new NullFuncException("function is empty");
+    public Function(String func, String value){
+        this.func = func;
+        this.variable = value;
+    }
+
+    /*
+    Подстановка значения value в функцию привязанную
+    к экземпляру, который вызвал метод.
+     */
+    public Double insert(Double value){
+        return new ExprEvaluator()
+                .evaluate("N(Evaluate((" +
+                        this.func +
+                        ") /. " +
+                        this.variable +
+                        " -> " +
+                        value + "))")
+                .toDoubleDefault();
+    }
+    public void dif(){
+        this.func = (difCalc() != null) ? difCalc().func : this.func;
+    }
+
+    public String dif(int iterations) throws Exception {
+        Function func = ValidationService.validate(this.func);
+        while(iterations>0){
+            func.dif();
+            iterations--;
         }
+        return func.func;
+    }
+
+
+    /*
+    Метод dif вычисляет производную математической функции,
+    хранящейся в экземпляре функции, по вложенной переменной.
+    Если в параметре передан: FALSE вернет получившийся дифференциал,
+    TRUE изменит тот экземпляр на котором был вызван метод.
+    */
+    private Function difCalc(){
+        ExprEvaluator evaluator = new ExprEvaluator(false, (short) 20);
+        Function result;
+        try {
+            result = ValidationService
+                    .validate(evaluator.evaluate("D("+
+                                    this.func+
+                                    " ,"+
+                                    this.variable +
+                                    ")")
+                            .toString());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return this.func;
     }
 }

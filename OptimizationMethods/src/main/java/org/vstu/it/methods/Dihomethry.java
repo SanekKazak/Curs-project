@@ -1,19 +1,25 @@
 package org.vstu.it.methods;
 
-import org.vstu.it.interfaces.Minimum;
+import org.it.funcion.Function;
 
-public class Dihomethry implements Minimum {
-    private double firstLLimit;
-    private double secondLimit;
-    private double accuracy;
-
-    @Override
-    public void minimum() {
-        double x1 = (firstLLimit+secondLimit)/2 - accuracy*0.01;
-        double x2 = (firstLLimit+secondLimit)/2 + accuracy*0.01;
-
+public class Dihomethry {
+    public double minimum(double firstLLimit,
+                          double secondLimit,
+                          double accuracy,
+                          Function func) throws Exception {
+        double min, max, middle = (firstLLimit + secondLimit) / 2;
+        while (Math.abs(secondLimit - firstLLimit) > accuracy) {
+            middle = (firstLLimit + secondLimit) / 2;
+            min = middle - accuracy * 0.1;
+            max = middle + accuracy * 0.1;
+            double p = func.insert(min);
+            double p1 = func.insert(max);
+            if (p > p1) {
+                firstLLimit = middle;
+            } else if (p < p1) {
+                secondLimit = middle;
+            }
+        }
+        return firstLLimit;
     }
-
-
-
 }

@@ -16,14 +16,21 @@ public class Function {
     к экземпляру, который вызвал метод.
      */
     public Double insert(Double value){
-        return new ExprEvaluator()
-                .evaluate("N(Evaluate((" +
-                        this.func +
-                        ") /. " +
-                        this.variable +
-                        " -> " +
-                        value + "))")
-                .toDoubleDefault();
+        try{
+            return new ExprEvaluator()
+                    .evaluate("N(Evaluate((" +
+                            this.func +
+                            ") /. " +
+                            this.variable +
+                            " -> " +
+                            value + "))")
+                    .toDoubleDefault();
+        }catch(Exception e){
+            return new ExprEvaluator()
+                    .evaluate(this.func)
+                    .toDoubleDefault();
+        }
+
     }
     public void dif(){
         this.func = (difCalc() != null) ? difCalc().func : this.func;

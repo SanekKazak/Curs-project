@@ -3,23 +3,23 @@ package org.vstu.it.methods;
 import org.it.funcion.Function;
 
 public class Dihomethry {
-    public double minimum(double firstLLimit,
-                          double secondLimit,
-                          double accuracy,
-                          Function func) throws Exception {
-        double min, max, middle = (firstLLimit + secondLimit) / 2;
-        while (Math.abs(secondLimit - firstLLimit) > accuracy) {
-            middle = (firstLLimit + secondLimit) / 2;
-            min = middle - accuracy * 0.1;
-            max = middle + accuracy * 0.1;
+
+    public double minimum(double firstLimit, double secondLimit, double accuracy, Function func){
+        double middle;
+
+        while(Math.abs(secondLimit - firstLimit) > accuracy) {
+            middle = (firstLimit + secondLimit) / (double)2.0F;
+            double min = middle - accuracy * 0.1;
+            double max = middle + accuracy * 0.1;
             double p = func.insert(min);
             double p1 = func.insert(max);
             if (p > p1) {
-                firstLLimit = middle;
+                firstLimit = middle;
             } else if (p < p1) {
                 secondLimit = middle;
             }
         }
-        return firstLLimit;
+
+        return firstLimit;
     }
 }

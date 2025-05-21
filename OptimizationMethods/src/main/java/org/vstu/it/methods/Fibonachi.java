@@ -1,13 +1,15 @@
 package org.vstu.it.methods;
 
 import org.it.funcion.Function;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 public class Fibonachi {
 
-    public double minimum(double firstLimit, double secondLimit, Integer accuracy, Function func) {
+    public Map<Double, Double> minimum(double firstLimit, double secondLimit, Integer accuracy, Function func) {
         List<Double> list = this.fibonachiSequence(accuracy);
+        Double y;
+        Map<Double, Double> minimum = new LinkedHashMap();
 
         while(accuracy > 2) {
             accuracy = accuracy - 1;
@@ -17,14 +19,18 @@ public class Fibonachi {
             double f2 = func.insert(x2);
             if (f1 > f2) {
                 firstLimit = x1;
+                y = func.insert(firstLimit);
+                minimum.put(y, firstLimit);
             }
 
             if (f1 < f2) {
                 secondLimit = x2;
+                y = func.insert(secondLimit);
+                minimum.put(y, secondLimit);
             }
         }
 
-        return firstLimit;
+        return minimum;
     }
 
     public List<Double> fibonachiSequence(int value) {

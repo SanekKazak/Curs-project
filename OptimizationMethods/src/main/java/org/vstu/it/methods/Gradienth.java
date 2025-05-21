@@ -3,6 +3,10 @@ package org.vstu.it.methods;
 import org.it.funcion.Function;
 import org.it.funcion.ValidationService;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class Gradienth {
     private int iterations = 1000;
 
@@ -16,12 +20,18 @@ public class Gradienth {
 
     }
 
-    public Double minimum(double currentPoint, double iterationSize, double accuracy, Function func) throws Exception {
+    public Map<Double, Double> minimum(double currentPoint, double iterationSize, double accuracy, Function func) throws Exception {
+
+        Double y;
+        Map<Double, Double> minimum = new LinkedHashMap();
+
         for(int i = 0; i < this.iterations; ++i) {
             double previous = currentPoint;
             currentPoint -= iterationSize * ValidationService.validate(func.dif(1)).insert(currentPoint);
+            y = func.insert(currentPoint);
+            minimum.put(y, currentPoint);
             if (Math.abs(previous - currentPoint) < accuracy) {
-                return currentPoint;
+                return minimum;
             }
         }
 

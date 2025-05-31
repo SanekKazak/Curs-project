@@ -8,27 +8,28 @@ import java.util.Map;
 
 public class Goldenpath {
 
-    public Map<Double, Double> minimum(double firstLimit, double secondLimit, double accuracy, Function func){
+    public Map<Map<Double, Double>, Map<Double, Double>> minimum(double firstLimit, double secondLimit, double accuracy, Function func){
         double f = 1.61803;
-        Double y;
         Map<Double, Double> minimum = new LinkedHashMap();
-
+        var graph = Grapher.grapher.graph(firstLimit, secondLimit, func);
         while(Math.abs(secondLimit - firstLimit) > accuracy) {
             double x1 = secondLimit - (secondLimit - firstLimit) / f;
             double x2 = firstLimit + (secondLimit - firstLimit) / f;
-            if (func.insert(x1) < func.insert(x2)) {
+            double f1 = func.insert(x1);
+            double f2 = func.insert(x2);
+            if (f1 < f2) {
                 secondLimit = x2;
-                y = func.insert(secondLimit);
-                minimum.put(y, secondLimit);
+                minimum.put(secondLimit, f1);
             }
 
-            if (func.insert(x1) > func.insert(x2)) {
+            if (f1 > f2) {
                 firstLimit = x1;
-                y = func.insert(firstLimit);
-                minimum.put(y, firstLimit);
+                minimum.put(firstLimit, f2);
             }
         }
 
-        return minimum;
+        Map<Map<Double, Double>, Map<Double, Double>> finalyMap = new HashMap<>();
+        finalyMap.put(minimum, graph);
+        return finalyMap;
     }
 }

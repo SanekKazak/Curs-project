@@ -17,21 +17,20 @@ public class Gradienth {
         if (iterations > 0) {
             this.setIterations(iterations);
         }
-
     }
 
-    public Map<Double, Double> minimum(double currentPoint, double iterationSize, double accuracy, Function func) throws Exception {
+    public Map<Map<Double, Double>, Map<Double, Double>> minimum(double currentPoint, double iterationSize, double accuracy, Function func) throws Exception {
 
-        Double y;
         Map<Double, Double> minimum = new LinkedHashMap();
-
+        var graph = Grapher.grapher.graph(-1000.0, 1000.0, func);
         for(int i = 0; i < this.iterations; ++i) {
             double previous = currentPoint;
             currentPoint -= iterationSize * ValidationService.validate(func.dif(1)).insert(currentPoint);
-            y = func.insert(currentPoint);
-            minimum.put(y, currentPoint);
+            minimum.put(currentPoint, func.insert(currentPoint));
             if (Math.abs(previous - currentPoint) < accuracy) {
-                return minimum;
+                Map<Map<Double, Double>, Map<Double, Double>> finalyMap = new HashMap<>();
+                finalyMap.put(minimum, graph);
+                return finalyMap;
             }
         }
 

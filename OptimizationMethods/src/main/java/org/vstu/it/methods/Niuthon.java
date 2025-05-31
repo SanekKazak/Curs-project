@@ -17,12 +17,11 @@ public class Niuthon {
         if (iterations > 0) {
             this.setIterations(iterations);
         }
-
     }
 
-    public Map<Double, Double> minimum(double currentPoint, double accuracy, Function func) throws Exception {
+    public Map<Map<Double, Double>, Map<Double, Double>> minimum(double currentPoint, double accuracy, Function func) throws Exception {
 
-        Double y;
+        var graph = Grapher.grapher.graph(-1000.0, 1000.0, func);
         Map<Double, Double> minimum = new LinkedHashMap();
 
         for(int i = 0; i < this.iterations; ++i) {
@@ -30,10 +29,11 @@ public class Niuthon {
             Function d_1 = ValidationService.validate(func.dif(1));
             Function d_2 = ValidationService.validate(func.dif(2));
             currentPoint -= d_1.insert(currentPoint) / d_2.insert(currentPoint);
-            y = func.insert(currentPoint);
-            minimum.put(y, currentPoint);
+            minimum.put(currentPoint, func.insert(currentPoint));
             if (Math.abs(previous - currentPoint) < accuracy) {
-                return minimum;
+                Map<Map<Double, Double>, Map<Double, Double>> finalyMap = new HashMap<>();
+                finalyMap.put(minimum, graph);
+                return finalyMap;
             }
         }
 

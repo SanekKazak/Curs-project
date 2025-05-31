@@ -6,11 +6,10 @@ import java.util.*;
 
 public class Fibonachi {
 
-    public Map<Double, Double> minimum(double firstLimit, double secondLimit, Integer accuracy, Function func) {
-        List<Double> list = this.fibonachiSequence(accuracy);
-        Double y;
+    public Map<Map<Double, Double>, Map<Double, Double>> minimum(double firstLimit, double secondLimit, Integer accuracy, Function func) {
+        var list = this.fibonachiSequence(accuracy);
         Map<Double, Double> minimum = new LinkedHashMap();
-
+        var graph = Grapher.grapher.graph(firstLimit, secondLimit, func);
         while(accuracy > 2) {
             accuracy = accuracy - 1;
             double x1 = firstLimit + list.get(accuracy - 2) / list.get(accuracy) * (secondLimit - firstLimit);
@@ -19,18 +18,18 @@ public class Fibonachi {
             double f2 = func.insert(x2);
             if (f1 > f2) {
                 firstLimit = x1;
-                y = func.insert(firstLimit);
-                minimum.put(y, firstLimit);
+                minimum.put(firstLimit, f2);
             }
 
             if (f1 < f2) {
                 secondLimit = x2;
-                y = func.insert(secondLimit);
-                minimum.put(y, secondLimit);
+                minimum.put(secondLimit, f1);
             }
         }
 
-        return minimum;
+        Map<Map<Double, Double>, Map<Double, Double>> finalyMap = new HashMap<>();
+        finalyMap.put(minimum, graph);
+        return finalyMap;
     }
 
     public List<Double> fibonachiSequence(int value) {
